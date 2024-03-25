@@ -14,7 +14,7 @@ func Fizzbuzz(p *fizzbuzzParameters.Params) []string {
 
 	for i := startNb; i <= p.Limit; i++ {
 		if i != startNb {
-			result += p.Separator
+			result += fizzbuzzParameters.Separator
 		}
 
 		if i%p.Int1 == 0 && i%p.Int2 == 0 {
@@ -28,5 +28,5 @@ func Fizzbuzz(p *fizzbuzzParameters.Params) []string {
 		}
 	}
 
-	return strings.Split(result, p.Separator)
+	return strings.Split(result, fizzbuzzParameters.Separator)
 }
