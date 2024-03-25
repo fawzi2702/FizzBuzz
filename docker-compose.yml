@@ -1,8 +1,18 @@
 version: "3"
 services:
+  api:
+    build:
+      context: .
+    image: fizzbuzz-api-img
+    ports:
+      - "${API_PORT}:${API_PORT_CONTAINER}"
+    depends_on:
+      - redis
+    container_name: fizzbuzz-api
+
   redis:
     image: redis:7.2.4-alpine
-    container_name: ${REDIS_CONTAINER_NAME}
+    container_name: ${REDIS_HOST}
     ports:
       - "${REDIS_PORT}:6379"
     volumes:
