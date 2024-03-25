@@ -3,6 +3,7 @@ package fizzbuzzParameters
 import (
 	"errors"
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 
@@ -73,6 +74,8 @@ func (p *Params) validate() (bool, error) {
 func (p *Params) validateInt1() error {
 	if p.Int1 <= 0 {
 		return errors.New("Int1 must be greater than 0")
+	} else if p.Int1 > math.MaxInt {
+		return errors.New("Int1 must be less than " + strconv.Itoa(math.MaxInt64))
 	}
 
 	return nil
@@ -83,6 +86,8 @@ func (p *Params) validateInt2() error {
 		return errors.New("int2 must be greater than 0")
 	} else if p.Int2 == p.Int1 {
 		return errors.New("int2 must be different from Int1")
+	} else if p.Int2 > math.MaxInt {
+		return errors.New("int2 must be less than " + strconv.Itoa(math.MaxInt64))
 	}
 
 	return nil
