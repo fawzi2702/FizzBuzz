@@ -26,11 +26,12 @@ func ParseParams(c *gin.Context) (*Params, error) {
 	var err error
 
 	if params.Int1, err = strconv.Atoi(c.Query("int1")); err != nil {
-		return nil, errors.New("Int1 must be a valid integer")
+		println("error int1 ATOI", params.Int1, err.Error())
+		return nil, errors.New("int1 must be a valid integer")
 	}
 
 	if params.Int2, err = strconv.Atoi(c.Query("int2")); err != nil {
-		return nil, errors.New("Int2 must be a valid integer")
+		return nil, errors.New("int2 must be a valid integer")
 	}
 
 	if params.Limit, err = strconv.Atoi(c.Query("limit")); err != nil {
@@ -73,9 +74,9 @@ func (p *Params) validate() (bool, error) {
 
 func (p *Params) validateInt1() error {
 	if p.Int1 <= 0 {
-		return errors.New("Int1 must be greater than 0")
+		return errors.New("int1 must be greater than 0")
 	} else if p.Int1 > math.MaxInt {
-		return errors.New("Int1 must be less than " + strconv.Itoa(math.MaxInt64))
+		return errors.New("int1 must be less than " + strconv.Itoa(math.MaxInt64))
 	}
 
 	return nil
@@ -147,11 +148,11 @@ func ParseKey(key string) (*Params, error) {
 	var err error
 
 	if params.Int1, err = strconv.Atoi(splitted[0]); err != nil {
-		return nil, errors.New("Int1 must be a valid integer")
+		return nil, errors.New("int1 must be a valid integer")
 	}
 
 	if params.Int2, err = strconv.Atoi(splitted[1]); err != nil {
-		return nil, errors.New("Int2 must be a valid integer")
+		return nil, errors.New("int2 must be a valid integer")
 	}
 
 	if params.Limit, err = strconv.Atoi(splitted[2]); err != nil {
