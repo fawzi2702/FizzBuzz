@@ -21,20 +21,25 @@ func SaveRequestStat(p *fizzbuzzParameters.Params) error {
 	return nil
 }
 
-func GetTopRequest() (*fizzbuzzParameters.Params, error) {
-	topRequest, err := redisdb.Client.ZRevRange(redisdb.Context, statsKey, 0, 0).Result()
+func GetTopRequest() (*fizzbuzzParameters.Params, int, error) {
+	topRequests, err := redisdb.Client.ZRevRangeWithScores(redisdb.Context, statsKey, 0, 0).Result()
 	if err != nil {
-		return nil, fmt.Errorf("failed to get the top request: %w", err)
+		return nil, 0, fmt.Errorf("failed to get the top request: %w", err)
 	}
 
-	if len(topRequest) == 0 {
-		return nil, nil
+	if len(topRequests) == 0 {
+		return nil, 0, nil
 	}
 
-	p, err := fizzbuzzParameters.ParseKey(topRequest[0])
+	topRequest := topRequests[0]
+
+	score := int(topRequest.Score)
+	key := topRequest.Member.(string)
+
+	p, err := fizzbuzzParameters.ParseKey(key)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse the top request: %w", err)
+		return nil, 0, fmt.Errorf("failed to parse the top request: %w", err)
 	}
 
-	return p, nil
+	return p, score, nil
 }
