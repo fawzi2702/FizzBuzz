@@ -6,6 +6,8 @@ services:
     image: fizzbuzz-api-img
     ports:
       - "${API_PORT}:${API_PORT_CONTAINER}"
+    environment:
+      - MODE=dev
     depends_on:
       - redis
     container_name: fizzbuzz-api
