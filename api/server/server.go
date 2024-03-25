@@ -35,13 +35,13 @@ func SetupServer() (*Server, error) {
 	routers.SetupStatsRouter(r)
 
 	// Start server
-	apiAddr, err := environment.Get("API_ADDR")
+	apiPort, err := environment.Get("API_PORT")
 	if err != nil {
-		return nil, fmt.Errorf("API_ADDR not found in environment: %w", err)
+		return nil, fmt.Errorf("API_PORT not found in environment: %w", err)
 	}
 
 	srv := &Server{
-		Addr:    apiAddr,
+		Addr:    ":" + apiPort,
 		Handler: r,
 	}
 

@@ -10,7 +10,7 @@ import (
 )
 
 type Env struct {
-	ApiAddr      string
+	ApiPort      string
 	Mode         string // dev, prod
 	RedisHost    string
 	RedisPort    string
@@ -34,11 +34,11 @@ func SetupEnv() error {
 	// MODE
 	e.Mode = env.Get("MODE", "dev")
 	if !slices.Contains(modes, e.Mode) {
-		return errors.New("MODE environment variable must be either dev or prod")
+		return fmt.Errorf("MODE environment variable must be either dev or prod. Got: %s", e.Mode)
 	}
 
-	// API_ADDR
-	e.ApiAddr, err = env.MustGet("API_ADDR")
+	// API_PORT
+	e.ApiPort, err = env.MustGet("API_PORT")
 	if err != nil {
 		return err
 	}
@@ -60,8 +60,8 @@ func Get(key string) (string, error) {
 	}
 
 	switch key {
-	case "API_ADDR":
-		return environment.ApiAddr, nil
+	case "API_PORT":
+		return environment.ApiPort, nil
 	case "MODE":
 		return environment.Mode, nil
 	case "REDIS_ADDR":
