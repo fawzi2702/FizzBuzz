@@ -32,6 +32,7 @@ func SetupServer() (*Server, error) {
 
 	// Setup groups
 	routers.SetupFizzbuzzRouter(r)
+	routers.SetupStatsRouter(r)
 
 	// Start server
 	apiAddr, err := environment.Get("API_ADDR")
