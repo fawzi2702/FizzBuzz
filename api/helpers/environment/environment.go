@@ -38,13 +38,14 @@ func SetupEnv() error {
 	}
 
 	// API_PORT
-	e.ApiPort, err = env.MustGet("API_PORT")
-	if err != nil {
+	if e.ApiPort, err = env.MustGet("API_PORT"); err != nil {
 		return err
 	}
 
 	// REDIS
-	e.RedisHost = env.Get("REDIS_HOST", "localhost")
+	if e.RedisHost, err = env.MustGet("REDIS_HOST"); err != nil {
+		return err
+	}
 	e.RedisPort = env.Get("REDIS_PORT", "6379")
 	e.RedisDbIndex = env.Get("REDIS_DB_INDEX", "0")
 
