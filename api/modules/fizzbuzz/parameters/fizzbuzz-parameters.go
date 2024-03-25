@@ -96,6 +96,8 @@ func (p *Params) validateInt2() error {
 func (p *Params) validateLimit() error {
 	if p.Limit <= 0 {
 		return errors.New("limit must be greater than 0")
+	} else if p.Limit > math.MaxInt {
+		return errors.New("limit must be less than " + strconv.Itoa(math.MaxInt64))
 	}
 
 	return nil
