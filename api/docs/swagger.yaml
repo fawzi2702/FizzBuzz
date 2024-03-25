@@ -1,0 +1,138 @@
+basePath: /
+definitions:
+  fizzbuzzParameters.Params:
+    properties:
+      int1:
+        type: integer
+      int2:
+        type: integer
+      limit:
+        type: integer
+      str1:
+        type: string
+      str2:
+        type: string
+    type: object
+  handlers.StatsResponse:
+    properties:
+      params:
+        $ref: '#/definitions/fizzbuzzParameters.Params'
+      score:
+        type: integer
+    type: object
+  response.ErrorResponse:
+    properties:
+      error:
+        type: string
+      ok:
+        example: false
+        type: boolean
+    type: object
+  response.OkResponse:
+    properties:
+      data: {}
+      ok:
+        example: true
+        type: boolean
+    type: object
+info:
+  contact:
+    name: this_is_iz
+  description: This is a simple FizzBuzz API
+  title: FizzBuzz API
+  version: "1.0"
+paths:
+  /fizzbuzz:
+    get:
+      consumes:
+      - application/json
+      description: Get the fizzbuzz result
+      parameters:
+      - description: Multiplicator for str1
+        in: query
+        minimum: 1
+        name: int1
+        required: true
+        type: integer
+      - description: Multiplicator for str2
+        in: query
+        minimum: 1
+        name: int2
+        required: true
+        type: integer
+      - description: Limit number
+        in: query
+        minimum: 1
+        name: limit
+        required: true
+        type: integer
+      - description: First string, to be displayed when the number is a multiple of
+          int1
+        in: query
+        minLength: 1
+        name: str1
+        required: true
+        type: string
+      - description: Second string, to be displayed when the number is a multiple
+          of int2
+        in: query
+        minLength: 1
+        name: str2
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.OkResponse'
+            - properties:
+                data:
+                  items:
+                    type: string
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Get the fizzbuzz result
+      tags:
+      - fizzbuzz
+  /stats:
+    get:
+      consumes:
+      - application/json
+      description: Get the most requested parameters
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.OkResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/handlers.StatsResponse'
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Get the most requested parameters
+      tags:
+      - stats
+schemes:
+- http
+swagger: "2.0"

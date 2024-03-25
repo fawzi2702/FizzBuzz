@@ -9,6 +9,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetTopRequest godoc
+// @Summary Get the most requested parameters
+// @Description Get the most requested parameters
+// @Tags stats
+// @Accept json
+// @Produce json
+// @Success 200 {object} response.OkResponse{data=fizzbuzzParameters.Params}
+// @Failure 404 {object} response.ErrorResponse
+// @Failure 500 {object} response.ErrorResponse
+// @Router /stats [get]
 func Stats(c *gin.Context) {
 	p, err := stats.GetTopRequest()
 	if err != nil {

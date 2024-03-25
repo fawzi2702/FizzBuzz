@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	_ "github.com/fawzi2702/FizzBuzz/api/docs"
 	"github.com/fawzi2702/FizzBuzz/api/helpers/environment"
 	"github.com/fawzi2702/FizzBuzz/api/routers"
 	"github.com/gin-gonic/gin"
@@ -33,6 +34,7 @@ func SetupServer() (*Server, error) {
 	// Setup groups
 	routers.SetupFizzbuzzRouter(r)
 	routers.SetupStatsRouter(r)
+	routers.SetupDocsRouter(r) // Docs
 
 	// Start server
 	apiPort, err := environment.Get("API_PORT")

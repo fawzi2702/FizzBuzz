@@ -6,6 +6,12 @@ import (
 	"github.com/fawzi2702/FizzBuzz/api/server"
 )
 
+// @title FizzBuzz API
+// @version 1.0
+// @description This is a simple FizzBuzz API
+// @contact.name this_is_iz
+// @BasePath /
+// @schemes http
 func main() {
 	// Setup environment
 	if envErr := environment.SetupEnv(); envErr != nil {
